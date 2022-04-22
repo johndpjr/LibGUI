@@ -3,7 +3,7 @@ project(LibGUI)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_executable(LibGUI main.cpp)
+add_executable(LibGUI main.cpp Application.cpp Application.h Window.cpp Window.h)
 
 set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
 set(GLFW_BUILD_TESTS OFF CACHE BOOL "" FORCE)
