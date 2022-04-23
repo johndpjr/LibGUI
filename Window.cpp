@@ -6,7 +6,8 @@ size_t Window::s_window_count {0};
 
 Window::Window(int width, int height, const std::string& title)
     : m_window{glfwCreateWindow(width, height, title.data(), NULL, NULL)},
-      m_root_frame{std::make_unique<Frame>(new Frame{nullptr})},
+      m_root_frame{std::make_unique<Frame>(nullptr)},
+      event_manager{m_window},
       m_title{title}
 {
     if (!m_window) {
@@ -15,7 +16,8 @@ Window::Window(int width, int height, const std::string& title)
     ++s_window_count;
 }
 
-Window::~Window() {
+Window::~Window()
+{
     glfwDestroyWindow(m_window);
     --s_window_count;
     if (s_window_count == 0) {
@@ -24,8 +26,9 @@ Window::~Window() {
 }
 
 void Window::mainloop() {
+    glfwSwapInterval(1);
     while (!glfwWindowShouldClose(m_window)) {
         glfwSwapBuffers(m_window);
-        glfwPollEvents();
+        event_manager.handle_events();
     }
 }
